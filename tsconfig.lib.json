@@ -1,0 +1,14 @@
+{
+  // Type declarations for the package (dist/*.d.ts). Only the public entry and what it imports,
+  // so the docs site never ends up in the package.
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.tsbuildinfo",
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src/index.ts", "src/theme/styled.d.ts"]
+}

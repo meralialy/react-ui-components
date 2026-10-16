@@ -1,0 +1,53 @@
+// Icon names by category, for the docs gallery.
+export const iconGroups = [
+  { title: 'People & communication', names: ['UserIcon', 'MailIcon', 'PhoneIcon', 'BellIcon'] },
+  { title: 'Security', names: ['LockIcon', 'UnlockIcon', 'EyeIcon', 'EyeOffIcon', 'LogoutIcon'] },
+  {
+    title: 'Actions',
+    names: [
+      'SearchIcon',
+      'PlusIcon',
+      'MinusIcon',
+      'CloseIcon',
+      'CheckIcon',
+      'EditIcon',
+      'TrashIcon',
+      'CopyIcon',
+      'DownloadIcon',
+      'UploadIcon',
+      'FilterIcon',
+      'RefreshIcon',
+      'ExternalLinkIcon',
+    ],
+  },
+  {
+    title: 'Navigation',
+    names: [
+      'ChevronUpIcon',
+      'ChevronDownIcon',
+      'ChevronLeftIcon',
+      'ChevronRightIcon',
+      'ArrowLeftIcon',
+      'ArrowRightIcon',
+      'MenuIcon',
+      'MoreHorizontalIcon',
+      'HomeIcon',
+    ],
+  },
+  { title: 'Status', names: ['InfoIcon', 'SuccessIcon', 'WarningIcon', 'ErrorIcon'] },
+  {
+    title: 'Other',
+    names: [
+      'SettingsIcon',
+      'CalendarIcon',
+      'ClockIcon',
+      'ImageIcon',
+      'HeartIcon',
+      'StarIcon',
+      'SunIcon',
+      'MoonIcon',
+      'ListIcon',
+      'GridIcon',
+    ],
+  },
+] as const

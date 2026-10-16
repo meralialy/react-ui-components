@@ -1,0 +1,146 @@
+name: Deploy docs to Cloudflare Pages
+
+run-name: ${{ github.event.head_commit.message || github.event.pull_request.title }}
+
+env:
+  NODE_VERSION: 22
+  CLOUDFLARE_PROJECT_NAME: react-ui-component
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  a11y:
+    name: Accessibility (a11y)
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn a11y
+
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn audit:ci
+
+  format:
+    name: Format
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn format:check
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
+
+  size:
+    name: Package build + bundle size
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn size
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn typecheck
+
+  knip:
+    name: Unused code (knip)
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn knip
+
+  build:
+    name: Build
+    needs: [a11y, audit, format, lint, size, typecheck, knip]
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn build
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: docs-build
+          path: dist-docs/
+          retention-days: 1
+
+  deploy:
+    name: Deploy
+    needs: [build]
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: docs-build
+          path: ./dist-docs
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy ./dist-docs --project-name=${{ env.CLOUDFLARE_PROJECT_NAME }} --branch=${{ github.head_ref || github.ref_name }}

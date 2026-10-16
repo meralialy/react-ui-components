@@ -1,0 +1,73 @@
+{
+  "name": "react-ui-components",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Accessible React UI components with light and dark themes, built with styled-components.",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc -b",
+    "prepare": "husky",
+    "check:contrast": "tsx scripts/check-contrast.ts",
+    "a11y": "yarn check:contrast",
+    "build:lib": "vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json",
+    "prepack": "yarn build:lib",
+    "size": "yarn build:lib && size-limit",
+    "knip": "knip",
+    "audit:ci": "audit-ci --config audit-ci.jsonc"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "styled-components": "^6.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@size-limit/preset-small-lib": "^14.2.0",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "audit-ci": "^7.1.0",
+    "eslint": "^10.12.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsx-a11y-x": "^0.2.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "husky": "^9.1.7",
+    "knip": "^6.41.0",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.9",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router": "^8.4.0",
+    "size-limit": "^14.2.0",
+    "styled-components": "^6.5.3",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.71.1",
+    "vite": "^8.3.0"
+  },
+  "packageManager": "yarn@1.22.22"
+}

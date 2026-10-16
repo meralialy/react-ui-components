@@ -1,0 +1,19 @@
+[
+  { "name": "Everything (import *)", "path": "dist/index.js", "import": "*", "limit": "21.5 kB" },
+  {
+    "name": "UIProvider (theme + toasts)",
+    "path": "dist/index.js",
+    "import": "{ UIProvider }",
+    "limit": "3.4 kB"
+  },
+  { "name": "Button", "path": "dist/index.js", "import": "{ Button }", "limit": "1.1 kB" },
+  { "name": "Input", "path": "dist/index.js", "import": "{ Input }", "limit": "1.7 kB" },
+  { "name": "Modal", "path": "dist/index.js", "import": "{ Modal }", "limit": "1.4 kB" },
+  { "name": "Table", "path": "dist/index.js", "import": "{ Table }", "limit": "1.65 kB" },
+  {
+    "name": "One icon (SearchIcon)",
+    "path": "dist/index.js",
+    "import": "{ SearchIcon }",
+    "limit": "460 B"
+  }
+]

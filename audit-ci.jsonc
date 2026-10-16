@@ -1,0 +1,11 @@
+{
+  "$schema": "https://github.com/IBM/audit-ci/raw/main/docs/schema.json",
+  // Fail on high and critical vulnerabilities; lower severities are reported but don't fail.
+  "high": true,
+  // Shows allowlisted advisories that no longer apply, so the list can be cleaned up.
+  "show-not-found": true,
+  // Advisories accepted after review, each with the reason next to it. Empty: the braces
+  // advisory (GHSA-vfj7-8cjw-p6xm) was fixed by replacing eslint-plugin-check-file with a local
+  // rule (eslint-rules/kebab-case.js) rather than allowlisted.
+  "allowlist": [],
+}
